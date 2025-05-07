@@ -30,45 +30,56 @@ Using the HoughLinesP(),detect line co-ordinates for every points in the images.
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-image = cv2.imread('spyd.jpg')  # Replace with your image path
+image = cv2.imread('fish.jpg') 
 plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
 plt.title('Input Image')
 plt.axis('off')
 ```
-![image](https://github.com/user-attachments/assets/f2a48cac-a9e0-42e0-aa2c-d2dcd6e60f2f)
+![image](https://github.com/user-attachments/assets/4c62d880-1d1b-4884-8201-57c2c1d3ad45)
+
 ```
 gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 plt.imshow(gray_image, cmap='gray')
 plt.title('Grayscale Image')
 plt.axis('off')
 ```
-![image](https://github.com/user-attachments/assets/5bddac9a-32fd-4f19-a1e2-7c8c638598d5)
+![image](https://github.com/user-attachments/assets/fa4f7b77-21ff-4c2e-bfb5-2710896e969b)
+
 
 ### Canny Edge detector output
 ```
-gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-plt.imshow(gray_image, cmap='gray')
-plt.title('Grayscale Image')
-plt.axis('off')
+
+canny = cv2.Canny(gray_blur, 120, 150)
+plt.imshow(canny, cmap='gray')
+plt.title("Canny Edge Detector")
+plt.axis("off")
+plt.show()
 ```
-![image](https://github.com/user-attachments/assets/d231e06b-3208-4697-83b5-d992028bcc2e)
+![image](https://github.com/user-attachments/assets/2938845b-70bc-445a-b916-acd23c781071)
+
 
 
 ### Display the result of Hough transform
 ```
-lines = cv2.HoughLinesP(edges, rho=1, theta=np.pi/180, threshold=100, minLineLength=50, maxLineGap=10)
-output_image = image.copy()
+
+lines = cv2.HoughLinesP(canny, 1, np.pi/180, threshold=80, minLineLength=50, maxLineGap=250)
 
 if lines is not None:
     for line in lines:
         x1, y1, x2, y2 = line[0]
-        cv2.line(output_image, (x1, y1), (x2, y2), (0, 255, 0), 2)
-plt.imshow(cv2.cvtColor(output_image, cv2.COLOR_BGR2RGB))
-plt.title('Hough Transform - Line Detection')
-plt.axis('off')
+        cv2.line(img_c, (x1, y1), (x2, y2), (255, 0, 0), 3)
+
+# DISPLAY THE FINAL RESULT
+plt.imshow(img_c)
+plt.title("Result Image with Lines")
+plt.axis("off")
+plt.show()
+
+
 
 ```
-![image](https://github.com/user-attachments/assets/b0c3f25a-6fe9-404a-b585-9cb205e1d661)
+![image](https://github.com/user-attachments/assets/6475f41a-0a20-42d2-8048-4c26e1e16bcc)
+
 
 ### Result:
 Thus,The Python program to detect the lines using Hough Transform run successfully.
